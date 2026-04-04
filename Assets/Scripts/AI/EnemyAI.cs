@@ -60,9 +60,12 @@ public class EnemyAI : MonoBehaviour
         }
 
         // 모든 웨이브 완료 후 마지막 유닛 종류로 무한 스폰
-        WaveData lastWave = stageData.waves[stageData.waves.Length - 1];
-        if (lastWave.unitData != null)
-            yield return RunInfinite(lastWave.unitData, lastWave.spawnInterval);
+        if (stageData.waves.Length > 0)
+        {
+            WaveData lastWave = stageData.waves[stageData.waves.Length - 1];
+            if (lastWave.unitData != null)
+                yield return RunInfinite(lastWave.unitData, lastWave.spawnInterval);
+        }
     }
 
     // ─── 폴백 모드 ───────────────────────────────────────────────────────────
