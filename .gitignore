@@ -1,0 +1,43 @@
+# Unity generated
+Library/
+Temp/
+Obj/
+obj/
+Logs/
+MemoryCaptures/
+UserSettings/
+
+# Unity cache
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+
+# Build artifacts
+[Bb]uild/
+[Bb]uilds/
+[Aa]ssets/AssetStoreTools*
+*.unitypackage
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.pidb
+*.booproj
+*.svd
+
+# Generated project files
+*.sln
+*.csproj
+ExportedObj/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude / Superpowers (로컬 전용)
+.claude/
+.superpowers/
