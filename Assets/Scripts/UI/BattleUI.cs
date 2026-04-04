@@ -8,6 +8,8 @@ using UnityEngine.UI;
 /// </summary>
 public class BattleUI : MonoBehaviour
 {
+    private const int MaxSlotCount = 8;
+
     [Header("마나 UI")]
     public Slider manaSlider;      // 마나 슬라이더
     public Text   waveText;        // 웨이브 표시 텍스트
@@ -21,10 +23,19 @@ public class BattleUI : MonoBehaviour
     public UnitData[] slotUnits;    // 각 슬롯에 배치할 UnitData
     public UnitSpawner allySpawner; // 아군 소환기 연결
 
+    private GUIStyle spawnBtnStyle;
+
     private void Start()
     {
         if (retreatButton != null)
             retreatButton.onClick.AddListener(OnRetreatButtonClicked);
+
+        spawnBtnStyle = new GUIStyle(GUI.skin.button)
+        {
+            fontSize = 11,
+            fontStyle = FontStyle.Bold,
+            alignment = TextAnchor.LowerCenter
+        };
     }
 
     private void Update()
@@ -94,17 +105,10 @@ public class BattleUI : MonoBehaviour
         float btnW    = 80f;
         float btnH    = 80f;
         float gap     = 8f;
-        int   count   = Mathf.Min(slotUnits.Length, 8);
+        int   count   = Mathf.Min(slotUnits.Length, MaxSlotCount);
         float totalW  = count * btnW + (count - 1) * gap;
         float startX  = (Screen.width - totalW) * 0.5f;
         float startY  = Screen.height - btnH - 20f;
-
-        GUIStyle btnStyle = new GUIStyle(GUI.skin.button)
-        {
-            fontSize  = 11,
-            fontStyle = FontStyle.Bold,
-            alignment = TextAnchor.LowerCenter
-        };
 
         for (int i = 0; i < count; i++)
         {
@@ -119,7 +123,7 @@ public class BattleUI : MonoBehaviour
             GUI.color = canAfford ? Color.white : new Color(1f, 1f, 1f, 0.4f);
 
             string label = $"{unit.unitName}\n{unit.manaCost}마나";
-            if (GUI.Button(btnRect, label, btnStyle) && canAfford && allySpawner != null)
+            if (GUI.Button(btnRect, label, spawnBtnStyle) && canAfford && allySpawner != null)
                 allySpawner.TrySpawnUnit(unit);
         }
 
