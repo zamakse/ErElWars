@@ -41,12 +41,15 @@ public class Projectile : MonoBehaviour
             return;
         }
 
-        // 목표 방향으로 이동
-        Vector3 dir = (target.GetTransform().position - transform.position).normalized;
+        // 목표 방향으로 이동 (GetTransform 결과를 캐싱해 null 안전 보장)
+        Transform targetTransform = target.GetTransform();
+        if (targetTransform == null) { Destroy(gameObject); return; }
+
+        Vector3 dir = (targetTransform.position - transform.position).normalized;
         transform.position += dir * Speed * Time.deltaTime;
 
         // 목표 도달 판정
-        float dist = Vector3.Distance(transform.position, target.GetTransform().position);
+        float dist = Vector3.Distance(transform.position, targetTransform.position);
         if (dist <= ArrivalRadius)
         {
             target.TakeDamage(damage);

@@ -32,12 +32,15 @@ public class ProjectileManager : MonoBehaviour
             go = Instantiate(projectilePrefab, originPos, Quaternion.identity);
             Projectile proj = go.GetComponent<Projectile>();
             if (proj == null) proj = go.AddComponent<Projectile>();
+            if (proj == null) { Debug.LogError("[ProjectileManager] Projectile 컴포넌트를 가져올 수 없습니다."); Destroy(go); return; }
             proj.Init(target, damage);
         }
         else
         {
             go = CreateDefaultProjectile(originPos);
-            go.GetComponent<Projectile>().Init(target, damage);
+            Projectile proj = go.GetComponent<Projectile>();
+            if (proj == null) { Debug.LogError("[ProjectileManager] Projectile 컴포넌트를 가져올 수 없습니다."); Destroy(go); return; }
+            proj.Init(target, damage);
         }
     }
 
