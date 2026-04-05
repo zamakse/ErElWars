@@ -21,6 +21,8 @@ public class UnitCombat : MonoBehaviour
     private float     attackTimer;
     private int       myTeam;
 
+    private const float RangedThreshold = 2f; // 이 값 초과이면 원거리 유닛 취급
+
     private enum CombatState { Moving, Fighting }
     private CombatState state = CombatState.Moving;
 
@@ -109,7 +111,12 @@ public class UnitCombat : MonoBehaviour
         if (target is UnitBase enemyUnit && !(target is BaseUnit))
             damage *= AffinitySystem.GetMultiplier(unitBase.unitType, enemyUnit.unitType);
 
-        target.TakeDamage(damage);
+        // 원거리 유닛: 투사체 발사 / 근접 유닛: 즉시 데미지
+        if (unitBase.attackRange > RangedThreshold && ProjectileManager.Instance != null)
+            ProjectileManager.Instance.Launch(transform.position, target, damage);
+        else
+            target.TakeDamage(damage);
+
         attackTimer = 1f / Mathf.Max(0.01f, unitBase.attackSpeed);
         OnAttackExecuted?.Invoke();
     }

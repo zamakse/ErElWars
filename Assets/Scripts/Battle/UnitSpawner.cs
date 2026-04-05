@@ -131,15 +131,15 @@ public class UnitSpawner : MonoBehaviour
     {
         if (spawnerFaction == Faction.Ally)
         {
-            float baseX = BaseHP.AllyBase != null
-                ? BaseHP.AllyBase.transform.position.x
+            float baseX = BaseUnit.AllyBase != null
+                ? BaseUnit.AllyBase.transform.position.x
                 : transform.position.x;
             return baseX + spawnOffsetFromBase;
         }
         else
         {
-            float baseX = BaseHP.EnemyBase != null
-                ? BaseHP.EnemyBase.transform.position.x
+            float baseX = BaseUnit.EnemyBase != null
+                ? BaseUnit.EnemyBase.transform.position.x
                 : transform.position.x;
             return baseX - spawnOffsetFromBase;
         }
